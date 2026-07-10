@@ -5,7 +5,7 @@ class LoginPage {
     this.page = page;
     this.username = page.getByPlaceholder("Username");
     this.password = page.getByPlaceholder("Password");
-    this.loginBtn = page.getByRole("button", { type: "submit" });
+    this.loginBtn = page.getByRole("button", { name: "Login" });
     this.usernameRequired = page.locator(
       "//label[text()='Username']/ancestor::div[contains(@class,'oxd-input-group')]//span",
     );
@@ -15,25 +15,25 @@ class LoginPage {
     this.errorMsg = page.locator("//p[text()='Invalid credentials']");
     this.header = page.locator("//h5[text()='Login']");
   }
-  async LoginToApplication(username, password) {
+  async loginToApplication(username, password) {
     await this.username.fill(username);
     await this.password.fill(password);
     await this.loginBtn.click();
   }
-  async VerifyHeaderVisibility() {
+  async verifyHeaderVisibility() {
     await expect(this.header).toBeVisible();
   }
-  async VerifyBothFieldsRequired() {
+  async verifyBothFieldsRequired() {
     await expect(this.usernameRequired).toBeVisible();
     await expect(this.passwordRequired).toBeVisible();
   }
-  async VerifyUsernameRequired() {
+  async verifyUsernameRequired() {
     await expect(this.usernameRequired).toBeVisible();
   }
-  async VerifyPasswordRequired() {
+  async verifyPasswordRequired() {
     await expect(this.passwordRequired).toBeVisible();
   }
-  async VerifyErrorMessage() {
+  async verifyErrorMessage() {
     await expect(this.errorMsg).toBeVisible();
   }
 }

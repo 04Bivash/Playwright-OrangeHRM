@@ -1,4 +1,4 @@
-const { test, expect } = require("@playwright/test");
+const { test } = require("@playwright/test");
 const testdata = require("../test-data/loginData.json");
 const { LoginPage } = require("../pages/loginPage");
 
@@ -11,9 +11,9 @@ test.beforeEach("Navigate to OrangeHRM", async ({ page }) => {
 test.describe("Testing login functionality of the application", () => {
   test("should login successfully with valid credentials", async ({ page }) => {
     const loginPage = new LoginPage(page);
-    await loginPage.LoginToApplication(
-      testdata[0].username,
-      testdata[0].password,
+    await loginPage.loginToApplication(
+      testdata.validUser.username,
+      testdata.validUser.password,
     );
   });
 
@@ -21,54 +21,54 @@ test.describe("Testing login functionality of the application", () => {
     page,
   }) => {
     const loginPage = new LoginPage(page);
-    await loginPage.LoginToApplication(
-      testdata[1].username,
-      testdata[1].password,
+    await loginPage.loginToApplication(
+      testdata.invalidPassword.username,
+      testdata.invalidPassword.password,
     );
-    await loginPage.VerifyErrorMessage();
+    await loginPage.verifyErrorMessage();
   });
 
   test("should display an error message for an invalid username", async ({
     page,
   }) => {
     const loginPage = new LoginPage(page);
-    await loginPage.LoginToApplication(
-      testdata[2].username,
-      testdata[2].password,
+    await loginPage.loginToApplication(
+      testdata.invalidUsername.username,
+      testdata.invalidUsername.password,
     );
-    await loginPage.VerifyErrorMessage();
+    await loginPage.verifyErrorMessage();
   });
 
   test("should display a validation message when username field is empty", async ({
     page,
   }) => {
     const loginPage = new LoginPage(page);
-    await loginPage.LoginToApplication(
-      testdata[3].username,
-      testdata[3].password,
+    await loginPage.loginToApplication(
+      testdata.missingUsername.username,
+      testdata.missingUsername.password,
     );
-    await loginPage.VerifyUsernameRequired();
+    await loginPage.verifyUsernameRequired();
   });
 
   test("should display a validation message when password field is empty", async ({
     page,
   }) => {
     const loginPage = new LoginPage(page);
-    await loginPage.LoginToApplication(
-      testdata[4].username,
-      testdata[4].password,
+    await loginPage.loginToApplication(
+      testdata.missingPassword.username,
+      testdata.missingPassword.password,
     );
-    await loginPage.VerifyPasswordRequired();
+    await loginPage.verifyPasswordRequired();
   });
 
   test("should display validation message when both fields are empty", async ({
     page,
   }) => {
     const loginPage = new LoginPage(page);
-    await loginPage.LoginToApplication(
-      testdata[5].username,
-      testdata[5].password,
+    await loginPage.loginToApplication(
+      testdata.missingBothFields.username,
+      testdata.missingBothFields.password,
     );
-    await loginPage.VerifyBothFieldsRequired();
+    await loginPage.verifyBothFieldsRequired();
   });
 });

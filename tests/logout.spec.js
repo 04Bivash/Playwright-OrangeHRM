@@ -1,18 +1,23 @@
 const { test, expect } = require("@playwright/test");
 const testdata = require("../test-data/loginData.json");
 const { LoginPage } = require("../pages/loginPage");
-const { HomePage } = require("../pages/homePage");
+const { DashboardPage } = require("../pages/dashboardPage");
 
-test("Testing logout functionality of the application", async ({ page }) => {
+let loginPage;
+let dashboardPage;
+
+test.beforeEach("Navigate to Orange HRM", async ({ page }) => {
   await page.goto(
     "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login",
   );
-  const loginPage = new LoginPage(page);
-  const homePage = new HomePage(page);
-  await loginPage.LoginToApplication(
-    testdata[0].username,
-    testdata[0].password,
+  loginPage = new LoginPage(page);
+  dashboardPage = new DashboardPage(page);
+  await loginPage.loginToApplication(
+    testdata.validUser.username,
+    testdata.validUser.password,
   );
-  await homePage.LogoutFromApplication();
-  await loginPage.VerifyHeaderVisibility();
+});
+test("Testing logout functionality of the application", async ({ page }) => {
+  await dashboardPage.logoutFromApplication();
+  await loginPage.verifyHeaderVisibility();
 });

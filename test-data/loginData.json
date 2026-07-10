@@ -1,26 +1,26 @@
-[
-  {
+{
+  "validUser": {
     "username": "Admin",
     "password": "admin123"
   },
-  {
+  "invalidPassword": {
     "username": "Admin",
     "password": "password123"
   },
-  {
+  "invalidUsername": {
     "username": "user",
     "password": "admin123"
   },
-  {
+  "missingUsername": {
     "username": "",
     "password": "admin123"
   },
-  {
+  "missingPassword": {
     "username": "Admin",
     "password": ""
   },
-  {
+  "missingBothFields": {
     "username": "",
     "password": ""
   }
-]
+}
