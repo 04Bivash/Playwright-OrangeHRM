@@ -88,13 +88,33 @@ test.describe("Testing the functionality of the PIM page", () => {
     await pimPage.fillAddEmployeeForm(employee1);
     await pimPage.verifyLastNameRequiredError();
   });
-  test.only("should require password confirmation to match", async ({
-    page,
-  }) => {
+  test("should require password confirmation to match", async ({ page }) => {
     const employee1 = generateEmployee();
     await pimPage.clickAddBtn();
     employee1.cPassword = "123654";
     await pimPage.fillAddEmployeeForm(employee1);
     await pimPage.verifyPasswordMatchError();
+  });
+
+  test.only("should return details of searched employee", async ({ page }) => {
+    const employee = generateEmployee();
+    const empId = employee.employeeId;
+    await pimPage.clickAddBtn();
+    await pimPage.fillAddEmployeeForm(employee);
+    await pimPage.clickSaveBtn();
+    await pimPage.searchEmployee(empId);
+    await pimPage.verifySearchResult(empId);
+  });
+
+  test("should display an error message for an invalid search", async ({
+    page,
+  }) => {
+    const employee = generateEmployee();
+    const empId = "xyz789";
+    await pimPage.clickAddBtn();
+    await pimPage.fillAddEmployeeForm(employee);
+    await pimPage.clickSaveBtn();
+    await pimPage.searchEmployee(empId);
+    await pimPage.verifySearchError(empId);
   });
 });

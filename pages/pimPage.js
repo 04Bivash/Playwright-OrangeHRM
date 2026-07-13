@@ -33,6 +33,12 @@ class PimPage {
       "//input[@placeholder='Last Name']/ancestor::div/span[text()='Required']",
     );
     this.passwordMatchError = page.getByText("Passwords do not match");
+    this.employeeListBtn = page.getByRole("link", { name: "Employee List" });
+    this.searchEmployeeId = page.locator(
+      "//label[text()='Employee Id']/parent::div/following-sibling::div/child::input",
+    );
+    this.searchBtn = page.getByRole("button", { name: "Search" });
+    this.searchError = page.locator("//span[text()='No Records Found']");
   }
 
   async verifyPimPageLoaded() {
@@ -55,7 +61,6 @@ class PimPage {
     await this.cPassword.fill(employee.cPassword);
   }
   async clickSaveBtn() {
-    await this.page.pause();
     await this.saveBtn.click();
     await expect(this.page.getByText("Success", { exact: true })).toBeVisible();
   }
@@ -78,6 +83,24 @@ class PimPage {
 
   async verifyPasswordMatchError() {
     await expect(this.passwordMatchError).toBeVisible();
+  }
+
+  async searchEmployee(employeeId) {
+    await this.employeeListBtn.click();
+    await this.searchEmployeeId.fill(employeeId);
+    await this.searchBtn.click();
+  }
+
+  async verifySearchResult(employeeId) {
+    await expect(
+      this.page
+        .locator(".oxd-table-body")
+        .getByText(employeeId, { exact: true }),
+    ).toBeVisible();
+  }
+
+  async verifySearchError() {
+    await expect(this.searchError).toBeVisible();
   }
 }
 
