@@ -1,5 +1,5 @@
 const { test } = require("@playwright/test");
-const testdata = require("../test-data/loginData.json");
+const loginTestData = require("../test-data/loginData.json");
 const { LoginPage } = require("../pages/loginPage");
 
 test.beforeEach("Navigate to OrangeHRM", async ({ page }) => {
@@ -12,8 +12,8 @@ test.describe("Testing login functionality of the application", () => {
   test("should login successfully with valid credentials", async ({ page }) => {
     const loginPage = new LoginPage(page);
     await loginPage.loginToApplication(
-      testdata.validUser.username,
-      testdata.validUser.password,
+      loginTestData.validUser.username,
+      loginTestData.validUser.password,
     );
   });
 
@@ -22,8 +22,8 @@ test.describe("Testing login functionality of the application", () => {
   }) => {
     const loginPage = new LoginPage(page);
     await loginPage.loginToApplication(
-      testdata.invalidPassword.username,
-      testdata.invalidPassword.password,
+      loginTestData.invalidPassword.username,
+      loginTestData.invalidPassword.password,
     );
     await loginPage.verifyErrorMessage();
   });
@@ -33,8 +33,8 @@ test.describe("Testing login functionality of the application", () => {
   }) => {
     const loginPage = new LoginPage(page);
     await loginPage.loginToApplication(
-      testdata.invalidUsername.username,
-      testdata.invalidUsername.password,
+      loginTestData.invalidUsername.username,
+      loginTestData.invalidUsername.password,
     );
     await loginPage.verifyErrorMessage();
   });
@@ -44,8 +44,8 @@ test.describe("Testing login functionality of the application", () => {
   }) => {
     const loginPage = new LoginPage(page);
     await loginPage.loginToApplication(
-      testdata.missingUsername.username,
-      testdata.missingUsername.password,
+      loginTestData.missingUsername.username,
+      loginTestData.missingUsername.password,
     );
     await loginPage.verifyUsernameRequired();
   });
@@ -55,8 +55,8 @@ test.describe("Testing login functionality of the application", () => {
   }) => {
     const loginPage = new LoginPage(page);
     await loginPage.loginToApplication(
-      testdata.missingPassword.username,
-      testdata.missingPassword.password,
+      loginTestData.missingPassword.username,
+      loginTestData.missingPassword.password,
     );
     await loginPage.verifyPasswordRequired();
   });
@@ -66,8 +66,8 @@ test.describe("Testing login functionality of the application", () => {
   }) => {
     const loginPage = new LoginPage(page);
     await loginPage.loginToApplication(
-      testdata.missingBothFields.username,
-      testdata.missingBothFields.password,
+      loginTestData.missingBothFields.username,
+      loginTestData.missingBothFields.password,
     );
     await loginPage.verifyBothFieldsRequired();
   });

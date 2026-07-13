@@ -1,5 +1,5 @@
 const { test, expect } = require("@playwright/test");
-const testdata = require("../test-data/loginData.json");
+const loginTestData = require("../test-data/loginData.json");
 const { LoginPage } = require("../pages/loginPage");
 const { DashboardPage } = require("../pages/dashboardPage");
 
@@ -13,8 +13,8 @@ test.beforeEach("Navigate to Orange HRM", async ({ page }) => {
   loginPage = new LoginPage(page);
   dashboardPage = new DashboardPage(page);
   await loginPage.loginToApplication(
-    testdata.validUser.username,
-    testdata.validUser.password,
+    loginTestData.validUser.username,
+    loginTestData.validUser.password,
   );
 });
 test("Testing logout functionality of the application", async ({ page }) => {

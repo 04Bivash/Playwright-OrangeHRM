@@ -1,7 +1,7 @@
 const { test } = require("@playwright/test");
 const { DashboardPage } = require("../pages/dashboardPage");
 const { LoginPage } = require("../pages/loginPage");
-const testdata = require("../test-data/loginData.json");
+const loginTestData = require("../test-data/loginData.json");
 
 let loginPage;
 let dashboardPage;
@@ -13,8 +13,8 @@ test.beforeEach("Navigate to OrangeHRM Dashboard", async ({ page }) => {
   loginPage = new LoginPage(page);
   dashboardPage = new DashboardPage(page);
   await loginPage.loginToApplication(
-    testdata.validUser.username,
-    testdata.validUser.password,
+    loginTestData.validUser.username,
+    loginTestData.validUser.password,
   );
 });
 

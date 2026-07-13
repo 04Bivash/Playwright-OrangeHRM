@@ -2,7 +2,7 @@ const { test } = require("@playwright/test");
 const { DashboardPage } = require("../pages/dashboardPage");
 const { LoginPage } = require("../pages/loginPage");
 const { AdminPage } = require("../pages/adminPage");
-const testdata = require("../test-data/loginData.json");
+const loginTestData = require("../test-data/loginData.json");
 
 let loginPage;
 let dashboardPage;
@@ -19,8 +19,8 @@ test.beforeEach(
       "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login",
     );
     await loginPage.loginToApplication(
-      testdata.validUser.username,
-      testdata.validUser.password,
+      loginTestData.validUser.username,
+      loginTestData.validUser.password,
     );
     await dashboardPage.clickAdmin();
   },
