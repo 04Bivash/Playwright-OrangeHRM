@@ -33,8 +33,8 @@ test.describe("Testing the functionality of the Buzz page", () => {
     await buzzPage.verifyBuzzPageLoaded();
   });
 
-  test.only("should create a new post successfully", async ({ page }) => {
-    const postContent = "Playwright Test Post Content";
+  test("should create a new post successfully", async ({ page }) => {
+    const postContent = `Playwright Test Post Content ${Date.now()}`;
     await buzzPage.createPost(postContent);
     await buzzPage.clickPostBtn();
     await buzzPage.verifyPost(postContent);

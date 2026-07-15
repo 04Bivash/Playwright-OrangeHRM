@@ -25,10 +25,14 @@ class BuzzPage {
   }
   async verifyPost(postContent) {
     await this.mostRecentBtn.click();
-    await this.page.pause();
+    const post = this.page.locator(
+      "oxd-text oxd-text--p orangehrm-buzz-post-body-text",
+    );
     await expect(
       this.page
-        .locator(".orangehrm-buzz-post-body")
+        .locator(
+          "//p[@class='oxd-text oxd-text--p orangehrm-buzz-post-body-text']",
+        )
         .getByText(postContent, { exact: true }),
     ).toBeVisible();
   }
