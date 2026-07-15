@@ -2,6 +2,7 @@ const { test } = require("@playwright/test");
 const { DashboardPage } = require("../pages/dashboardPage");
 const { LoginPage } = require("../pages/loginPage");
 const { PimPage } = require("../pages/pimPage");
+const emp = require("../utils/employeeGenerator");
 const loginTestData = require("../test-data/loginData.json");
 
 let loginPage;
@@ -33,71 +34,59 @@ test.describe("Testing the functionality of the PIM page", () => {
     await pimPage.verifyPimPageLoaded();
   });
 
-  function generateEmployee() {
-    const unique = Date.now();
-    return {
-      employeeId: unique.toString().substring(0, 9),
-      firstName: "Ram",
-      middleName: "Krishna",
-      lastName: "Shrestha",
-      username: `emp${unique}`,
-      password: "user@123",
-      cPassword: "user@123",
-    };
-  }
   test("should add a new employee with valid details", async ({ page }) => {
-    const employee = generateEmployee();
+    const employee = emp.generateEmployee();
     await pimPage.clickAddBtn();
     await pimPage.fillAddEmployeeForm(employee);
     await pimPage.clickSaveBtn();
   });
 
   test("should not allow duplicate employeeID", async ({ page }) => {
-    const employee1 = generateEmployee();
+    const employee1 = emp.generateEmployee();
     await pimPage.clickAddBtn();
     await pimPage.fillAddEmployeeForm(employee1);
     await pimPage.clickSaveBtn();
-    const employee2 = generateEmployee();
+    const employee2 = emp.generateEmployee();
     employee2.employeeId = employee1.employeeId;
     await pimPage.clickAddBtn();
     await pimPage.fillAddEmployeeForm(employee2);
     await pimPage.verifyDuplicateEmployeeIdError();
   });
   test("should not allow duplicate username", async ({ page }) => {
-    const employee1 = generateEmployee();
+    const employee1 = emp.generateEmployee();
     await pimPage.clickAddBtn();
     await pimPage.fillAddEmployeeForm(employee1);
     await pimPage.clickSaveBtn();
-    const employee2 = generateEmployee();
+    const employee2 = emp.generateEmployee();
     employee2.username = employee1.username;
     await pimPage.clickAddBtn();
     await pimPage.fillAddEmployeeForm(employee2);
     await pimPage.verifyDuplicateUsernameError();
   });
   test("should require first name", async ({ page }) => {
-    const employee1 = generateEmployee();
+    const employee1 = emp.generateEmployee();
     await pimPage.clickAddBtn();
     employee1.firstName = " ";
     await pimPage.fillAddEmployeeForm(employee1);
     await pimPage.verifyFirstNameRequiredError();
   });
   test("should require last name", async ({ page }) => {
-    const employee1 = generateEmployee();
+    const employee1 = emp.generateEmployee();
     await pimPage.clickAddBtn();
     employee1.lastNameName = " ";
     await pimPage.fillAddEmployeeForm(employee1);
     await pimPage.verifyLastNameRequiredError();
   });
   test("should require password confirmation to match", async ({ page }) => {
-    const employee1 = generateEmployee();
+    const employee1 = emp.generateEmployee();
     await pimPage.clickAddBtn();
     employee1.cPassword = "123654";
     await pimPage.fillAddEmployeeForm(employee1);
     await pimPage.verifyPasswordMatchError();
   });
 
-  test.only("should return details of searched employee", async ({ page }) => {
-    const employee = generateEmployee();
+  test("should return details of searched employee", async ({ page }) => {
+    const employee = emp.generateEmployee();
     const empId = employee.employeeId;
     await pimPage.clickAddBtn();
     await pimPage.fillAddEmployeeForm(employee);
@@ -109,7 +98,7 @@ test.describe("Testing the functionality of the PIM page", () => {
   test("should display an error message for an invalid search", async ({
     page,
   }) => {
-    const employee = generateEmployee();
+    const employee = emp.generateEmployee();
     const empId = "xyz789";
     await pimPage.clickAddBtn();
     await pimPage.fillAddEmployeeForm(employee);
