@@ -1,7 +1,7 @@
 function generateEmployee() {
   const unique = Date.now();
   return {
-    employeeId: unique.toString().substring(0, 9),
+    employeeId: unique.toString().slice(-8),
     firstName: "Ram",
     middleName: "Krishna",
     lastName: "Shrestha",

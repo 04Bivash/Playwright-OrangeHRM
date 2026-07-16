@@ -40,14 +40,17 @@ class DashboardPage {
 
   async clickAdmin() {
     await this.adminLink.click();
+    await expect(this.page).toHaveURL(/admin/);
   }
 
   async clickPim() {
     await this.pimLink.click();
+    await expect(this.page).toHaveURL(/pim/);
   }
 
   async clickBuzz() {
     await this.buzzLink.click();
+    await expect(this.page).toHaveURL(/buzz/);
   }
 }
 

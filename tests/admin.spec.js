@@ -51,6 +51,7 @@ test.describe("Testing the functionality of the admin page", () => {
     const cPassword = employee.cPassword;
     await pimPage.clickSaveBtn();
     await dashboardPage.clickAdmin();
+    await adminPage.verifyAdminPageLoaded();
     await adminPage.clickAddBtn();
     await adminPage.fillUserDetails(
       employeeName,
@@ -86,7 +87,7 @@ test.describe("Testing the functionality of the admin page", () => {
     await adminPage.verifySearchResult();
   });
 
-  test.only("should display an error message for an invalid search", async ({
+  test("should display an error message for an invalid search", async ({
     page,
   }) => {
     await dashboardPage.clickPim();
@@ -100,6 +101,8 @@ test.describe("Testing the functionality of the admin page", () => {
     const cPassword = employee.cPassword;
     await pimPage.clickSaveBtn();
     await dashboardPage.clickAdmin();
+    await adminPage.verifyAdminPageLoaded();
+
     await adminPage.clickAddBtn();
     await adminPage.fillUserDetails(
       employeeName,

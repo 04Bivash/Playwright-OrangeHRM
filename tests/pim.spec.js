@@ -73,7 +73,7 @@ test.describe("Testing the functionality of the PIM page", () => {
   test("should require last name", async ({ page }) => {
     const employee1 = emp.generateEmployee();
     await pimPage.clickAddBtn();
-    employee1.lastNameName = " ";
+    employee1.lastName = " ";
     await pimPage.fillAddEmployeeForm(employee1);
     await pimPage.verifyLastNameRequiredError();
   });
